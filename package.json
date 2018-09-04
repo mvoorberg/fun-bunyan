@@ -1,0 +1,19 @@
+{
+  "name": "fun-bunyan",
+  "version": "1.0.0",
+  "description": "A simple console.log implementation of a Bunyan logger.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "logger",
+    "console",
+    "bunyan"
+  ],
+  "author": "4umfreak",
+  "license": "MIT",
+  "dependencies": {
+    "bunyan": "^1.8.12"
+  }
+}
