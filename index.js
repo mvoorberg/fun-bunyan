@@ -15,17 +15,17 @@ const LEVEL_NAMES = {
 const COLORS = {
     "Reset": "\x1b[0m",
     "Bold": "\x1b[1m",
-    "Inverse": "\x1b[7m",
-    "bgRed": "\x1b[41m",
+    "Inverse": "\x1b[7m",    
     "Black": "\x1b[30m",
-    "White": "\x1b[37m",
     "Red": "\x1b[31m",
     "Green": "\x1b[32m",
     "Yellow": "\x1b[33m",
     "Blue": "\x1b[34m",
     "Magenta": "\x1b[35m",
     "Cyan": "\x1b[36m",
-    "Gray": "\x1b[90m"
+    "White": "\x1b[37m",
+    "Gray": "\x1b[90m",
+    "bgRed": "\x1b[41m"
 }
 
 const COLOR_MAP = {
@@ -40,7 +40,9 @@ const COLOR_MAP = {
     "trace": COLORS.Gray
 };
 
-function createConsoleStream(options) {
+const fun = {};
+
+fun.stream = (options) => {
     const stringifyOpts = {
         colors: true
     };
@@ -79,11 +81,11 @@ function createConsoleStream(options) {
         } else {
             options.stdout(util.format(options.logTemplate, smallFmtDate, level, obj.msg));
         }
-        // Delete the noise fields.
+        // Delete the Bunyan fields that would be considered 'noise' in a development console.
         ["name", "hostname", "pid", "msg", "err", "level", "time", "v"].map((noise) => {
             delete obj[noise];
         });
-        // Print out any remaining keys in the log object
+        // Print out any remaining keys in the log Object.
         if (Object.keys(obj).length) {
             if (options.stringify === 'simple') {
                 // Print a Circular-safe stringified Object.
@@ -97,13 +99,13 @@ function createConsoleStream(options) {
     return consoleStream;
 }
 
-module.exports = function (options) {
+fun.FunBunyan = function (options){
     options = options || {};
     const streamArray = options.streams || [];
 
     // Add the console output Stream.
     if (options.console !== false) {
-        const consoleStream = createConsoleStream(options.console);
+        const consoleStream = fun.stream(options.console);
         streamArray.push({
             stream: consoleStream,
             type: "raw",
@@ -116,3 +118,5 @@ module.exports = function (options) {
         streams: streamArray
     });
 }
+
+module.exports = fun;

@@ -1,13 +1,14 @@
 "use strict";
 const expect = require('chai').expect;
 const sinon = require('sinon');
-const FunBunyan = require('../');
+const { FunBunyan, stream } = require('../');
 
 describe('FunBunyan', function () {
     let funBunyan;
 
     beforeEach(function () {
         funBunyan = new FunBunyan();
+
     });
 
     it('default level, and changing levels', function (done) {
@@ -25,13 +26,13 @@ describe('FunBunyan', function () {
         let funBunyan;
         let stdout;
         let stddir;
-        let stderr; 
+        let stderr;
 
         beforeEach(function () {
             stdout = sinon.spy();
             stddir = sinon.spy();
-            stderr = sinon.spy(); 
-    
+            stderr = sinon.spy();
+
             const options = {
                 level: 'trace',
                 console: {
@@ -39,7 +40,7 @@ describe('FunBunyan', function () {
                     errorTemplate: '{%s}#(%s)#%s\n%s',
                     stdout,
                     stddir,
-                    stderr, 
+                    stderr,
                     stringify: 'simple',
                     colors: false
                 }
@@ -76,7 +77,9 @@ describe('FunBunyan', function () {
         });
 
         it('can log an Object with a message', function (done) {
-            funBunyan.trace({foo: 'bar'}, "this is my Object");
+            funBunyan.trace({
+                foo: 'bar'
+            }, "this is my Object");
             expect(stdout.calledTwice).to.equal(true); // Once for the message, once for the Object.
             let output = stdout.firstCall.args[0];
             output = output.replace(/\{.*?\}/, "{date-removed}");
@@ -88,24 +91,24 @@ describe('FunBunyan', function () {
             done();
         });
 
-    });    
+    });
 
     describe('FunBunyan, with defaults and custom colors', function () {
         let funBunyan;
         let stdout;
         let stddir;
-        let stderr; 
+        let stderr;
 
         beforeEach(function () {
             stdout = sinon.spy();
             stddir = sinon.spy();
-            stderr = sinon.spy(); 
-    
+            stderr = sinon.spy();
+
             const options = {
                 console: {
                     stdout,
                     stddir,
-                    stderr, 
+                    stderr,
                     colors: {
                         "reset": "COLORS.Reset",
                         "bold": "COLORS.Bold",
@@ -121,7 +124,7 @@ describe('FunBunyan', function () {
             };
             funBunyan = new FunBunyan(options);
         });
-    
+
         it('can be started at a different level', function (done) {
             expect(funBunyan.trace()).to.equal(false);
             expect(funBunyan.debug()).to.equal(false);
@@ -156,7 +159,5 @@ describe('FunBunyan', function () {
 
             done();
         });
-
-    });    
-
+    });
 });
