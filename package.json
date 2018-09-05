@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/4umfreak/fun-bunyan.git"
+    "url": "git+https://github.com/4umfreak/fun-bunyan.git"
   },
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc mocha",
@@ -16,8 +16,15 @@
     "console",
     "bunyan"
   ],
-  "author": "4umfreak",
+  "author": "Mark Voorberg <mark@binaryops.ca>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/4umfreak/fun-bunyan/issues"
+  },
+  "homepage": "https://github.com/4umfreak/fun-bunyan#readme",
+  "engines": {
+    "node": ">= 6"
+  },
   "devDependencies": {
     "chai": "^4.1.2",
     "coveralls": "^3.0.0",
