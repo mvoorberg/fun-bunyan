@@ -3,6 +3,9 @@ Easy console logging for Node apps. Use the fun-bunyan console stream for projec
 
 Powered by [bunyan](https://github.com/trentm/node-bunyan).
 
+[![Build Status](https://travis-ci.org/4umfreak/fun-bunyan.svg?branch=master)](https://travis-ci.org/4umfreak/fun-bunyan)
+[![Coverage Status](https://coveralls.io/repos/github/4umfreak/fun-bunyan/badge.svg?branch=master)](https://coveralls.io/github/4umfreak/fun-bunyan?branch=master)
+
 
 ## Installation
 
