@@ -29,6 +29,8 @@ const COLORS = {
 }
 
 const COLOR_MAP = {
+    "bold": COLORS.Bold,
+    "reset": COLORS.Reset,
     "time": COLORS.Blue,
     "fatal": COLORS.Inverse + COLORS.Magenta,
     "error": COLORS.Red,
@@ -38,27 +40,17 @@ const COLOR_MAP = {
     "trace": COLORS.Gray
 };
 
-const NO_COLORS = {
-    "time": '',
-    "fatal": '',
-    "error": '',
-    "warn": '',
-    "info": '',
-    "debug": '',
-    "trace": '',
-};
-
-
 function createConsoleStream(options) {
+    const stringifyOpts = {
+        colors: true
+    };
     options = options || {};
+    const consoleColors = Object.assign({}, COLOR_MAP, options.colors);
     if (options.colors === false) {
-        options.colors = NO_COLORS;
-        options.colors.reset = '';
-        options.colors.bold = '';
-    } else {
-        options.colors = Object.assign({}, options.colors, COLOR_MAP);
-        options.colors.reset = COLORS.Reset;
-        options.colors.bold = COLORS.Bold;
+        Object.keys(consoleColors).map((color) => {
+            consoleColors[color] = '';
+        });
+        stringifyOpts.colors = false;
     }
     options.errorTemplate = options.errorTemplate || '[%s] [%s]\t%s\n%s';
     options.logTemplate = options.logTemplate || '[%s] [%s]\t%s';
@@ -71,19 +63,19 @@ function createConsoleStream(options) {
     // * dynamic: Interactive while the process is running.
     options.stringify = options.stringify || 'dynamic';
 
-    
+
     // Create a more succinct stream for local development.
     const consoleStream = new Stream();
     consoleStream.writable = true;
     consoleStream.write = function (obj) {
         const dateString = obj.time.toLocaleString() + ':' + obj.time.getMilliseconds();
-        const smallFmtDate = options.colors.time + dateString + options.colors.reset;
+        const smallFmtDate = consoleColors.time + dateString + consoleColors.reset;
         const levelName = LEVEL_NAMES[obj.level];
         const levelText = LEVEL_NAMES[obj.level].toUpperCase();
-        const level = options.colors.bold + options.colors[levelName] + levelText + options.colors.reset;
+        const level = consoleColors.bold + consoleColors[levelName] + levelText + consoleColors.reset;
 
         if (obj.err && obj.err.stack) {
-            options.stderr(util.format(options.errorTemplate, smallFmtDate, level, obj.msg, obj.err.stack)); 
+            options.stderr(util.format(options.errorTemplate, smallFmtDate, level, obj.msg, obj.err.stack));
         } else {
             options.stdout(util.format(options.logTemplate, smallFmtDate, level, obj.msg));
         }
@@ -95,13 +87,13 @@ function createConsoleStream(options) {
         if (Object.keys(obj).length) {
             if (options.stringify === 'simple') {
                 // Print a Circular-safe stringified Object.
-                options.stdout(util.inspect(obj, {colors: true}));
+                options.stdout(util.inspect(obj, stringifyOpts));
             } else {
                 // While the Node process is still alive, it's interactive!
                 options.stddir(obj);
             }
         }
-}
+    }
     return consoleStream;
 }
 
