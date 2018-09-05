@@ -1,6 +1,6 @@
 {
   "name": "fun-bunyan",
-  "version": "1.0.5",
+  "version": "1.0.1",
   "description": "A simple console.log implementation of a Bunyan logger.",
   "main": "index.js",
   "repository": {
