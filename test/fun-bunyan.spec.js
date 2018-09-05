@@ -157,19 +157,6 @@ describe('FunBunyan', function () {
             done();
         });
 
-        // it('can log an Object with a message', function (done) {
-        //     funBunyan.trace({foo: 'bar'}, "this is my Object");
-        //     expect(stdout.calledTwice).to.equal(true); // Once for the message, once for the Object.
-        //     let output = stdout.firstCall.args[0];
-        //     output = output.replace(/\{.*?\}/, "{date-removed}");
-        //     expect(output).to.equal("{date-removed}*(TRACE)*this is my Object");
-
-        //     const objOutput = stdout.secondCall.args[0];
-        //     expect(objOutput).to.equal("{ foo: 'bar' }");
-
-        //     done();
-        // });
-
     });    
 
 });

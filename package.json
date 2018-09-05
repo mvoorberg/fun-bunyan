@@ -3,6 +3,10 @@
   "version": "1.0.1",
   "description": "A simple console.log implementation of a Bunyan logger.",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/4umfreak/fun-bunyan.git"
+  },
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc mocha",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
