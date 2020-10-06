@@ -1,7 +1,7 @@
 {
   "name": "fun-bunyan",
-  "version": "1.0.7",
-  "description": "A simple console.log implementation of a Bunyan logger.",
+  "version": "1.0.8",
+  "description": "A noise-free Bunyan logger that writes to the console. It makes using Bunyan in development **fun**.",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc mocha",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "deploy": "np"
   },
   "keywords": [
     "logger",
@@ -31,6 +32,7 @@
     "cross-env": "^5.2.1",
     "mocha": "^4.0.1",
     "mocha-lcov-reporter": "^1.3.0",
+    "np": "^6.5.0",
     "nyc": "^11.2.1",
     "shelljs": "^0.7.8",
     "sinon": "^6.3.5"
