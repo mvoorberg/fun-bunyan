@@ -1,6 +1,6 @@
 {
   "name": "fun-bunyan",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A noise-free Bunyan logger that writes to the console. It makes using Bunyan in development **fun**.",
   "main": "index.js",
   "repository": {
