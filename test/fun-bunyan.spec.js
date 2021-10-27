@@ -125,6 +125,34 @@ describe('FunBunyan', function () {
             funBunyan = new FunBunyan(options);
         });
 
+        it("mutation demo", function(done) {
+            const myObj = {
+                whiteStripes: 'Hardest Button to Button',
+            };
+        
+            ((myParam) => {
+                // mutate the input parameter
+                myParam.whiteStripes = 'Seven Nation Army';
+            })(myObj);
+    
+            expect(myObj.whiteStripes).to.equal('Seven Nation Army');
+            done();
+        });
+
+        it('doesn\'t mutate the log object', function (done) {
+            // Deletes  ["name", "hostname", "pid", "msg", "err", "level", "time", "v"]
+            const log = {
+                name: "My App",
+                hostname: "Espresso",
+                message: "This is a log message."
+            };
+            funBunyan.error(log);
+            expect(log.name).to.equal("My App");
+            expect(log.hostname).to.equal("Espresso");
+            expect(log.message).to.equal("This is a log message.");
+            done();
+        });
+
         it('can be started at a different level', function (done) {
             expect(funBunyan.trace()).to.equal(false);
             expect(funBunyan.debug()).to.equal(false);
