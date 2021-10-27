@@ -80,18 +80,22 @@ fun.stream = (options) => {
     } else {
       options.stdout(util.format(options.logTemplate, smallFmtDate, level, obj.msg));
     }
-    // Delete the Bunyan fields that would be considered 'noise' in a development console.
-    ["name", "hostname", "pid", "msg", "err", "level", "time", "v"].map((noise) => {
-      delete obj[noise];
-    });
+    // Omit the Bunyan fields that would be considered 'noise' in a development console.
+    const omit = ["name", "hostname", "pid", "msg", "err", "level", "time", "v"];
+    const cleanObj = Object.keys(obj)
+                            .filter(key => !omit.includes(key))
+                            .reduce((acc, key) => {
+                                acc[key] = obj[key];
+                                return acc;
+                            }, {});
     // Print out any remaining keys in the log Object.
-    if (Object.keys(obj).length) {
+    if (Object.keys(cleanObj).length) {
       if (options.stringify === "simple") {
         // Print a Circular-safe stringified Object.
-        options.stdout(util.inspect(obj, stringifyOpts));
+        options.stdout(util.inspect(cleanObj, stringifyOpts));
       } else {
         // While the Node process is still alive, it's interactive!
-        options.stddir(obj);
+        options.stddir(cleanObj);
       }
     }
   };
